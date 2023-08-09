@@ -10,5 +10,4 @@ export default function Logo() {
 
 
 const LogoImage = styled.img`
-  /* Estilos opcionais para a imagem */
 `;
