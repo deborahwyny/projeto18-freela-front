@@ -3,6 +3,7 @@ import { useState } from "react"
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import Login from "./pages/Login"
 import Cadastro from "./pages/Cadastro"
+import Home from "./pages/Home"
 
 
 function App() {
@@ -11,8 +12,9 @@ function App() {
   
    <BrowserRouter>
     <Routes>
-    <Route path="/" element={<Login />} />
+    {/* <Route path="/" element={<Login />} /> */}
     {/* <Route path="" element={<Cadastro/>} /> */}
+    <Route path="" element={Home}/>
     </Routes>
     </BrowserRouter>
 
