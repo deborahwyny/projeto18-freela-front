@@ -1,58 +1,57 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import NomeLogo from "../assets/nomeLogo.png";
 
 export default function Home() {
-    return (
-        <Container>
-            <Nav>
-                <Logo>My App</Logo>
-                <NavList>
-                    <li>Home</li>
-                    <li>Tutor</li>
-                    <li>cats</li>
-                </NavList>
-            </Nav>
-            <Main>
-                {/* Seu conteúdo principal aqui */}
-            </Main>
-        </Container>
-    );
+  return (
+    <Navbar>
+      <Logo src={NomeLogo} alt="Miaudelos Logo" />
+      <NavItems>
+        <NavItem>
+          <NavItemLink href="/">Home</NavItemLink>
+        </NavItem>
+        <NavItem>
+          <NavItemLink href="/tutor">Tutor</NavItemLink>
+        </NavItem>
+        <NavItem>
+          <NavItemLink href="/cats">Cats</NavItemLink>
+        </NavItem>
+      </NavItems>
+    </Navbar>
+  );
 }
 
-const Container = styled.div`
-    * {
-        margin: 0;
-        padding: 0;
-    }
+const Navbar = styled.nav`
+  background-color: white; 
+  color: #8c7da4; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
 `;
 
-const Nav = styled.nav`
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: #23232e;
-    height: 8vh;
-    position: fixed;
-    width: 100%;
-    z-index: 1;
+const Logo = styled.img`
+  max-width: 150px;
 `;
 
-const Logo = styled.div`
-    font-size: 24px;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    color: #fff;
+const NavItems = styled.ul`
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
 `;
 
-const NavList = styled.ul`
-    list-style: none;
-    display: flex;
+const NavItem = styled.li`
+  font-size: 16px;
 `;
 
-const Main = styled.main`
-    /* background: url("bg.jpg") no-repeat center center; */
-    background-size: cover;
-    height: 92vh;
-    padding-top: 8vh;
+const NavItemLink = styled.a`
+  text-decoration: none;
+  color: #8c7da4; 
+  transition: color 0.3s;
+
+  &:hover {
+    color: #6c549e; 
+  }
 `;
