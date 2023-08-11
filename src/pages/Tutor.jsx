@@ -22,12 +22,6 @@ export default function TutorPage() {
 
   return (
     <PageContainer>
-      <TutorConteiner>
-        <TutorCard>
-          <TutorImage src={catData.tutorImage} alt={`Foto de ${catData.tutorName}`} />
-          <TutorName>{catData.tutorName}</TutorName>
-        </TutorCard>
-      </TutorConteiner>
       <CardConteiner>
       <CatInfoCard>
         <CatImage src={catData.catImage} alt={catData.name} />
@@ -51,35 +45,12 @@ export default function TutorPage() {
 }
 
 const PageContainer = styled.div`
-  /* display: flex;
+   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  height: 100vh; */
+  align-items: center; 
+  height: 100vh;
 `;
 
-const TutorConteiner = styled.div`
-    display: flex;
-    align-items: flex-start;
-    margin-top: 8px;
-`;
-
-const TutorCard = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-`;
-
-const TutorImage = styled.img`
-  width: 54%;
-  border-radius: 50%;
-  margin-bottom: 10px;
-`;
-
-const TutorName = styled.h2`
-  font-size: 20px;
-  margin-bottom: 10px;
-`;
 
 
 const CardConteiner = styled.div`
@@ -146,11 +117,10 @@ const ToggleStatusButton = styled.button`
 `;
 const BottomGif = styled.div`
   display: flex;
-  justify-content: center;
   margin-top: 20px;
 
   img {
-    max-width: 100px; /* Ajuste o tamanho conforme necessário */
+    max-width: 100px; 
     height: auto;
   }
 `;
