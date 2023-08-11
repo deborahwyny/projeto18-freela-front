@@ -1,20 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom"
-import Logo from "../components/Logo";
+import { Link, useNavigate } from "react-router-dom"; import Logo from "../components/Logo";
+import apiAuth from "../services/apiAuth";
 
 export default function Login() {
+
+  const [form, setForm] = useState({email: "", senha: ""})
+  const navigate = useNavigate()
+
+  function formulario(e){
+    setForm({...form, [e.target.name]:[e.target.value]})
+  
+  }
+
+
+
+  function logando(e){
+    e.preventDefault()
+    apiAuth.cadastro(form)
+      .then( res =>{
+        console.log(res.data)
+        navigate("/")
+
+      })
+      .catch(err =>{
+        console.log(err.response.data)
+        alert(err.response.data)
+
+
+      })
+
+
+
+  }
+
   return (
 
 
     <ConteinerLogin>
          <Logo /> 
-      <Formulario>
-      <Input type="text" placeholder="E-mail" required/> 
-        <Input type="text" placeholder="Senha" required/> 
-        <Link to="/cadastro"><Button type="submit">Entrar</Button></Link>
+         <Formulario onSubmit={logando}>
+      <Input type="email" placeholder="E-mail" name= "email" value={form.email} required onChange={formulario}/> 
+        <Input type="password" placeholder="Senha" name="senha" value={form.senha} required onChange={formulario}/> 
+        <Button type="submit">Entrar</Button>
       </Formulario>
-     
+      <Link to="/cadastro"><Cadastro>Primeiro acesso?</Cadastro> </Link>
     </ConteinerLogin>
   );
 }
@@ -33,9 +63,12 @@ const Formulario = styled.form`
     justify-content: center;
     align-items: center;
     gap: 15px;
+    max-width: 300px;
+  width: 100%;
     
-`
+`;
 const Input = styled.input`
+width: 100%;
   padding: 5px;
   font-size: 16px;
   border-width: 0px;
@@ -77,6 +110,18 @@ const Button = styled.a`
   }
 `;
 
+const Cadastro = styled.h2`
+ font-size: 20px;
+  color: #8c7da4;
+  margin-top: 20px;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+  
+`
 
 
 

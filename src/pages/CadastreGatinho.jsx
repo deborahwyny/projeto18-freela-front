@@ -15,6 +15,7 @@ export default function RegistrationCard() {
             </FormGroup>
             <FormGroup>
               <Label>Nome do Tutor:</Label>
+              <Input type="text" />
             </FormGroup>
             <FormGroup>
               <Label>Nome do Gatinho:</Label>

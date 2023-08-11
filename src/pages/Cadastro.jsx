@@ -1,10 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; import Logo from "../components/Logo";
 import CadastreImage from "../assets/cadastre-se.png";
+import apiAuth from "../services/apiAuth";
+import { useState } from "react";
+
+
 
 export default function Cadastro() {
-    function cadastroLogin() {
+    const [form, setForm] = useState({email: "", senha: "", telefone:"", cpf:"", senha:"", confirmaSenha:""})
+    const navigate = useNavigate()
+
+
+    function formulario(e){
+        setForm({...form, [e.target.name]:[e.target.value]})
+
+      }
+
+    function cadastroLogin(e) {
+        e.preventDefault()
+        navigate("/")
+
         
     }
 
@@ -14,16 +30,18 @@ export default function Cadastro() {
                 <ImageContainer>
                     <CadastreImageStyled src={CadastreImage} alt="Imagem de Cadastre-se" />
                 </ImageContainer>
-                <Input placeholder="Nome" type="text" name="name" required />
-                <Input placeholder="E-mail" type="email" name="email" required />
-                <Input placeholder="Telefone" type="text" required />
-                <Input placeholder="CPF" type="text" required />
-                <Input placeholder="Senha" type="password" required name="senha" />
-                <Input placeholder="Confirme a senha" type="password" required />
-                <Link to="/">
+                <Input placeholder="Nome" type="text" name="name" value={form.nome}  required onChange={formulario}/>
+                <Input placeholder="E-mail" type="email" name="email" value={form.email}  required onChange={formulario}/>
+                <Input placeholder="Telefone" type="text" required name="telefone" value={form.telefone} onChange={formulario}/>
+                <Input placeholder="CPF" type="text" required name="cpf" value={form.cpf} onChange={formulario}/>
+                <Input placeholder="Senha" type="password" name="senha" value={form.senha} required onChange={formulario}/>
+                <Input placeholder="Confirme a senha" type="password" name="confirmaSenha" required value={form.confirmaSenha} onChange={formulario}/>
                     <SubmitButton type="submit">Cadastrar</SubmitButton>
-                </Link>
+                    <Link to="/"><Login>Já tem uma conta? Faça login!</Login> </Link>
+                
+
             </Form>
+
         </ConteinerLogin>
     );
 }
@@ -87,3 +105,15 @@ const SubmitButton = styled.button`
         background-color: #6b63fff1;
     }
 `;
+
+const Login = styled.h2`
+    font-size: 16px;
+  color: #8c7da4;
+  margin-top: 6px;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
