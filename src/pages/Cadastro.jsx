@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom"; import Logo from "../components/Logo";
+import { Link, useNavigate } from "react-router-dom"; 
 import CadastreImage from "../assets/cadastre-se.png";
 import apiAuth from "../services/apiAuth";
 import { useState } from "react";
@@ -8,26 +8,43 @@ import { useState } from "react";
 
 
 export default function Cadastro() {
-    const [form, setForm] = useState({email: "", senha: "", telefone:"", cpf:"", senha:"", confirmaSenha:""})
+    const [form, setForm] = useState({nome:"", cpf:"", telefone:"", email: "", senha: "", senha:"", confirmar_senha:""})
     const navigate = useNavigate()
 
 
     function formulario(e){
-        setForm({...form, [e.target.name]:[e.target.value]})
+        setForm({...form, [e.target.name]:e.target.value})
 
       }
 
+      const body = {
+        nome: form.nome,
+        cpf: form.cpf,
+        telefone:form.telefone,
+        email: form.email,
+        senha: form.senha,
+        confirmar_senha: form.confirmar_senha
+      };    
+  
+
     function cadastroLogin(e) {
         e.preventDefault()
-        apiAuth.cadastro(form)
+        console.log(form)
+
+        if (form.senha !== form.confirmar_senha) {
+            alert("As senhas não coincidem. Verifique os campos de senha.");
+            return;
+          }
+      console.log("body", body)
+        apiAuth.cadastro(body)
           .then( res =>{
-            console.log(res.data)
+            console.log(res)
             navigate("/")
     
           })
           .catch(err =>{
-            console.log(err.response.data)
-            alert(err.response.data)
+            console.log(err.response)
+            alert(err.response)
     
     
           })
@@ -41,16 +58,15 @@ export default function Cadastro() {
                 <ImageContainer>
                     <CadastreImageStyled src={CadastreImage} alt="Imagem de Cadastre-se" />
                 </ImageContainer>
-                <Input placeholder="Nome" type="text" name="name" value={form.nome}  required onChange={formulario}/>
-                <Input placeholder="E-mail" type="email" name="email" value={form.email}  required onChange={formulario}/>
-                <Input placeholder="Telefone" type="text" required name="telefone" value={form.telefone} onChange={formulario}/>
+                <Input placeholder="Nome" type="text" name="nome" value={form.nome}  required onChange={formulario}/>
                 <Input placeholder="CPF" type="text" required name="cpf" value={form.cpf} onChange={formulario}/>
+                <Input placeholder="Telefone" type="text" required name="telefone" value={form.telefone} onChange={formulario}/>
+                <Input placeholder="E-mail" type="email" name="email" value={form.email}  required onChange={formulario}/>
                 <Input placeholder="Senha" type="password" name="senha" value={form.senha} required onChange={formulario}/>
-                <Input placeholder="Confirme a senha" type="password" name="confirmaSenha" required value={form.confirmaSenha} onChange={formulario}/>
+                <Input placeholder="Confirme a senha" type="password" name="confirmar_senha" required value={form.confirmar_senha} onChange={formulario}/>
                     <SubmitButton type="submit">Cadastrar</SubmitButton>
                     <Link to="/login"><Login>Já tem uma conta? Faça login!</Login> </Link>
                 
-
             </Form>
 
         </ConteinerLogin>
