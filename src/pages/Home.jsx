@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import NomeLogo from "../assets/nomeLogo.png";
+import apiAuth from "../services/apiAuth";
+import { useEffect } from 'react';
+
 
 export default function Home() {
   const [expandedCat, setExpandedCat] = useState(null);
-
-  const cats = [
-    { id: 1, name: 'Whiskers', image: 'placeholder-image-1.jpg', description: 'A fluffy and playful kitty.' },
-    { id: 2, name: 'Mittens', image: 'placeholder-image-2.jpg', description: 'A graceful and elegant cat.' },
-    { id: 3, name: 'Socks', image: 'placeholder-image-3.jpg', description: 'A mischievous and curious kitten.' },
-  ];
+  const [fotosGatinhos, setfotosGatinhos] = useState([]);
 
   const expandCat = (catId) => {
     if (expandedCat === catId) {
@@ -17,7 +15,25 @@ export default function Home() {
     } else {
       setExpandedCat(catId);
     }
-  };
+  }
+
+  useEffect(()=>{
+
+
+  apiAuth.gatinhosHome()
+  .then(res=>{
+    console.log(res)
+    setfotosGatinhos(res.data)
+  })
+  .catch(err=>{
+    console.log(err.response)
+
+  })
+  
+
+
+}, [])
+
 
   return (
     <div>
@@ -40,12 +56,14 @@ export default function Home() {
       </Navbar>
       <Container>
         <CardContainer>
-          {cats.map((cat) => (
+          {fotosGatinhos.map((cat) => (
             <Card key={cat.id} onClick={() => expandCat(cat.id)} expanded={expandedCat === cat.id}>
-              <CardImage />
-              <CardName>{cat.name}</CardName>
+              <CardImage url={cat.url}  />
+              <CardName>{cat.nome_gatinho}</CardName>
+              <CardContact>Telefone: {cat.telefone_contato}</CardContact>
+
               {expandedCat === cat.id && (
-                <CardDescription>{cat.description}</CardDescription>
+                <CardDescription>{cat.caracteristica}</CardDescription>
               )}
             </Card>
           ))}
@@ -55,6 +73,12 @@ export default function Home() {
   );
 }
 
+
+const CardContact = styled.p`
+  font-size: 12px;
+  color: #555;
+  margin-top: 5px;
+`;
 const Navbar = styled.nav`
   background-color: white;
   color: #8c7da4;
@@ -125,6 +149,7 @@ const CardImage = styled.div`
   height: 150px;
   background-color: #ccc;
   border-radius: 5px;
+  background-image: url(${props => props.url});
 `;
 
 const CardName = styled.h2`

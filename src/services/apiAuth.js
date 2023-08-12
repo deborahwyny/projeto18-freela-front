@@ -14,10 +14,14 @@ function cadastro(body) {
 }
 
 function cadastreGatinho(body) {
-    const promise = axios.post(`${BASE_URL}/cadastro`, body);
+    const promise = axios.post(`${BASE_URL}/pets`, body);
     return promise;
 }
 
+function gatinhosHome(){
+const promise = axios.get(`${BASE_URL}/pets`);
+return promise;
+}
 
-const apiAuth = {login,cadastro, cadastreGatinho} 
+const apiAuth = {login,cadastro, cadastreGatinho,gatinhosHome} 
 export default apiAuth
