@@ -34,7 +34,7 @@ export default function Home() {
             <NavItemLink href="/cats">Cats</NavItemLink>
           </NavItem>
           <NavItem>
-            <NavItemLink href="/">Cadastre</NavItemLink>
+            <NavItemLink href="/cadastre">Cadastre</NavItemLink>
           </NavItem>
         </NavItems>
       </Navbar>

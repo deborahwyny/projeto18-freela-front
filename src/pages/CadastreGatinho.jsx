@@ -1,8 +1,37 @@
-import React from 'react';
+import React, { useState } from "react";
 import styled from 'styled-components';
-import Cadastre from "../assets/cadastre.png"
+import Cadastre from "../assets/cadastre.png";
+import { Link, useNavigate } from "react-router-dom"; 
+import apiAuth from "../services/apiAuth";
+
 
 export default function RegistrationCard() {
+
+
+  const [form, setForm] = useState({text: "", tutor: "", nome:"", telefone:"", url:"", valor:""})
+  const navigate = useNavigate()
+
+  function formulario(e){
+    setForm({...form, [e.target.name]:[e.target.value]})
+  
+  }
+
+  function cadastreGatinho(){
+    e.preventDefault()
+    apiAuth.cadastreGatinho(form)
+      .then( res =>{
+        console.log(res.data)
+        navigate("/")
+
+      })
+      .catch(err =>{
+        console.log(err.response.data)
+        alert(err.response.data)
+
+
+      })
+  }
+
   return (
     <CenteredContainer>
       <Card>
@@ -11,19 +40,27 @@ export default function RegistrationCard() {
           <Form>
             <FormGroup>
               <Label>Característica:</Label>
-              <Input type="text" />
+              <Input type="text" name= "text" value={form.text} required onChange={formulario}/>
             </FormGroup>
             <FormGroup>
               <Label>Nome do Tutor:</Label>
-              <Input type="text" />
+              <Input type="text" name= "tutor" value={form.tutor} required onChange={formulario}/>
             </FormGroup>
             <FormGroup>
               <Label>Nome do Gatinho:</Label>
-              <Input type="text" />
+              <Input type="text" name= "nome" value={form.nome} required onChange={formulario}/>
             </FormGroup>
             <FormGroup>
               <Label>Telefone de Contato:</Label>
-              <Input type="tel" />
+              <Input type="tel" name= "telefone" value={form.telefone} required onChange={formulario}/>
+            </FormGroup>
+            <FormGroup>
+              <Label>Url</Label>
+              <Input type="text" name= "url" value={form.url} required onChange={formulario}/>
+            </FormGroup>
+            <FormGroup>
+              <Label>Valor</Label>
+              <Input type="number" name= "valor" value={form.valor} required onChange={formulario}/>
             </FormGroup>
             <SubmitButton type="submit">Cadastrar</SubmitButton>
           </Form>

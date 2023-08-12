@@ -13,6 +13,11 @@ function cadastro(body) {
     return promise;
 }
 
+function cadastreGatinho(body) {
+    const promise = axios.post(`${BASE_URL}/cadastro`, body);
+    return promise;
+}
 
-const apiAuth = {login,cadastro} 
+
+const apiAuth = {login,cadastro, cadastreGatinho} 
 export default apiAuth

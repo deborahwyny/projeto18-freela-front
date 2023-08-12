@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom"; import Logo from "../components/Logo";
+import { Link, useNavigate } from "react-router-dom"; 
+import Logo from "../components/Logo";
 import apiAuth from "../services/apiAuth";
 
 export default function Login() {
@@ -17,7 +18,7 @@ export default function Login() {
 
   function logando(e){
     e.preventDefault()
-    apiAuth.cadastro(form)
+    apiAuth.login(form)
       .then( res =>{
         console.log(res.data)
         navigate("/")

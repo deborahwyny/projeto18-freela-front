@@ -19,14 +19,25 @@ export default function Cadastro() {
 
     function cadastroLogin(e) {
         e.preventDefault()
-        navigate("/")
+        apiAuth.cadastro(form)
+          .then( res =>{
+            console.log(res.data)
+            navigate("/")
+    
+          })
+          .catch(err =>{
+            console.log(err.response.data)
+            alert(err.response.data)
+    
+    
+          })
 
         
     }
 
     return (
         <ConteinerLogin>
-            <Form>
+            <Form onSubmit={cadastroLogin}>
                 <ImageContainer>
                     <CadastreImageStyled src={CadastreImage} alt="Imagem de Cadastre-se" />
                 </ImageContainer>
@@ -37,7 +48,7 @@ export default function Cadastro() {
                 <Input placeholder="Senha" type="password" name="senha" value={form.senha} required onChange={formulario}/>
                 <Input placeholder="Confirme a senha" type="password" name="confirmaSenha" required value={form.confirmaSenha} onChange={formulario}/>
                     <SubmitButton type="submit">Cadastrar</SubmitButton>
-                    <Link to="/"><Login>Já tem uma conta? Faça login!</Login> </Link>
+                    <Link to="/login"><Login>Já tem uma conta? Faça login!</Login> </Link>
                 
 
             </Form>
