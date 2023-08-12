@@ -6,20 +6,27 @@ import Cadastro from "./pages/Cadastro"
 import Home from "./pages/Home"
 import CadastreGatinho from "./pages/CadastreGatinho"
 import TutorPage from "./pages/Tutor"
+import { UserContext } from "./context/UserContext"
+
 
 
 function App() {
 
+  const [user, setUser] = useState({})
+
+
   return (
   
    <BrowserRouter>
+    <UserContext.Provider value={{user, setUser}}>
     <Routes>
-    <Route path="/login" element={<Login />} />
+    <Route path="/" element={<Login />} />
     <Route path="/cadastro" element={<Cadastro/>} />
-    <Route path="/" element={<Home />}/>
+    <Route path="/home" element={<Home />} value={{user, setUser}}/>
     <Route path="/cadastre" element={<CadastreGatinho />} />
     <Route path="/tutor" element={<TutorPage />}/>
     </Routes>
+    </UserContext.Provider>
     </BrowserRouter>
 
     

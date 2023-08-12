@@ -1,32 +1,45 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom"; 
 import Logo from "../components/Logo";
 import apiAuth from "../services/apiAuth";
+import { UserContext } from "../context/UserContext"
 
 export default function Login() {
 
   const [form, setForm] = useState({email: "", senha: ""})
+  const {user, setUser} = useContext(UserContext)
   const navigate = useNavigate()
 
   function formulario(e){
-    setForm({...form, [e.target.name]:[e.target.value]})
+    setForm({...form, [e.target.name]:e.target.value})
   
   }
+
+  const body = {
+    email: form.email,
+    senha: form.senha
+  };   
 
 
 
   function logando(e){
     e.preventDefault()
-    apiAuth.login(form)
+    console.log("oi")
+
+    apiAuth.login(body)
       .then( res =>{
-        console.log(res.data)
-        navigate("/")
+        const { token } = res.data
+       setUser({ token })
+
+        console.log(res)
+
+        navigate("/home")
 
       })
       .catch(err =>{
-        console.log(err.response.data)
-        alert(err.response.data)
+        console.log(err.response)
+        alert(err.response)
 
 
       })
@@ -40,10 +53,10 @@ export default function Login() {
 
     <ConteinerLogin>
          <Logo /> 
-         <Formulario onSubmit={logando}>
-      <Input type="email" placeholder="E-mail" name= "email" value={form.email} required onChange={formulario}/> 
-        <Input type="password" placeholder="Senha" name="senha" value={form.senha} required onChange={formulario}/> 
-        <Button type="submit">Entrar</Button>
+        <Formulario onSubmit={logando}>
+        <Input type="email" placeholder="E-mail" name= "email" value={form.email} required onChange={formulario}/> 
+        <Input type="password" placeholder="Senha" name="senha" value={form.senha} required onChange={formulario}/>
+        <Button type="submit">Entrar</Button> 
       </Formulario>
       <Link to="/cadastro"><Cadastro>Primeiro acesso?</Cadastro> </Link>
     </ConteinerLogin>
@@ -86,7 +99,7 @@ width: 100%;
   }
 `;
 
-const Button = styled.a`
+const Button = styled.button`
   background: linear-gradient(to right,#8c7da4 ,#8c7da4);
  background-color: #8c7da4;
   color: #fff;

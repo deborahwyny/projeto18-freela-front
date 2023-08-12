@@ -65,7 +65,7 @@ export default function Cadastro() {
                 <Input placeholder="Senha" type="password" name="senha" value={form.senha} required onChange={formulario}/>
                 <Input placeholder="Confirme a senha" type="password" name="confirmar_senha" required value={form.confirmar_senha} onChange={formulario}/>
                     <SubmitButton type="submit">Cadastrar</SubmitButton>
-                    <Link to="/login"><Login>Já tem uma conta? Faça login!</Login> </Link>
+                    <Link to="/"><Login>Já tem uma conta? Faça login!</Login> </Link>
                 
             </Form>
 
