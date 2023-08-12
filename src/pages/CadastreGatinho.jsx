@@ -1,36 +1,48 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from 'styled-components';
 import Cadastre from "../assets/cadastre.png";
 import { Link, useNavigate } from "react-router-dom"; 
 import apiAuth from "../services/apiAuth";
+import { UserContext } from "../context/UserContext"
+
 
 
 export default function RegistrationCard() {
 
 
   const [form, setForm] = useState({text: "", tutor: "", nome:"", telefone:"", url:"", valor:""})
+  const {user, setUser} = useContext(UserContext)
+
   const navigate = useNavigate()
 
   function formulario(e){
-    setForm({...form, [e.target.name]:[e.target.value]})
+    setForm({...form, [e.target.name]:e.target.value})
   
   }
 
   const body = {
-    text: form.text,
-    tutor: form.tutor,
-    nome:form.nome,
-    telefone: form.telefone,
+    caracteristica: form.text,
+    nome_tutor: form.tutor,
+    nome_gatinho:form.nome,
+    telefone_contato: form.telefone,
+    disponivel: true,
     url: form.url,
     valor: form.valor
   };  
 
-  function cadastreGatinho(){
+
+
+
+
+  function cadastreGatinho(e){
     e.preventDefault()
-    apiAuth.cadastreGatinho(form)
+    console.log(form)
+    console.log("oi",user)
+    apiAuth.cadastreGatinho(body,user)
       .then( res =>{
         console.log(res.data)
-        navigate("/")
+      
+        navigate("/home")
 
       })
       .catch(err =>{
@@ -51,7 +63,7 @@ export default function RegistrationCard() {
       <Card>
         <CardContent>
           <CadastreLogo src={Cadastre} alt="Cadastre"/>
-          <Form>
+          <Form onSubmit={cadastreGatinho}>
             <FormGroup>
               <Label>Característica:</Label>
               <Input type="text" name= "text" value={form.text} required onChange={formulario}/>
@@ -80,9 +92,9 @@ export default function RegistrationCard() {
           </Form>
         </CardContent>
       </Card>
-      <GifLink href="https://i.gifer.com/YC7t.gif" target="_blank">
+      {/* <GifLink href="https://i.gifer.com/YC7t.gif" target="_blank">
         <GifImage src="https://i.gifer.com/YC7t.gif" alt="Gatinha" />
-      </GifLink>
+      </GifLink> */}
     </CenteredContainer>
   );
 }
@@ -174,15 +186,15 @@ const SubmitButton = styled.button`
   }
 `;
 
-const GifLink = styled.a`
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  display: block;
-`;
+// const GifLink = styled.a`
+//   position: absolute;
+//   bottom: 10px;
+//   left: 10px;
+//   display: block;
+// `;
 
-const GifImage = styled.img`
-  width: 60%;
-  height: 60%;
-  border-radius: 50%;
-`;
+// const GifImage = styled.img`
+//   width: 60%;
+//   height: 60%;
+//   border-radius: 50%;
+// `;

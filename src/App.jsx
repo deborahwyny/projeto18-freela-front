@@ -12,7 +12,7 @@ import { UserContext } from "./context/UserContext"
 
 function App() {
 
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(localStorage.getItem("sessionToken") || "");
 
 
   return (
@@ -22,9 +22,9 @@ function App() {
     <Routes>
     <Route path="/" element={<Login />} />
     <Route path="/cadastro" element={<Cadastro/>} />
-    <Route path="/home" element={<Home />} value={{user, setUser}}/>
-    <Route path="/cadastre" element={<CadastreGatinho />} />
-    <Route path="/tutor" element={<TutorPage />}/>
+    <Route path="/home" element={<Home />}/>
+    <Route path="/cadastre" element={<CadastreGatinho />}  />
+    <Route path="/tutor" element={<TutorPage />} />
     </Routes>
     </UserContext.Provider>
     </BrowserRouter>

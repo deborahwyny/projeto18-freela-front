@@ -11,6 +11,10 @@ export default function Login() {
   const {user, setUser} = useContext(UserContext)
   const navigate = useNavigate()
 
+
+
+
+
   function formulario(e){
     setForm({...form, [e.target.name]:e.target.value})
   
@@ -23,16 +27,23 @@ export default function Login() {
 
 
 
+
+
   function logando(e){
     e.preventDefault()
     console.log("oi")
 
     apiAuth.login(body)
       .then( res =>{
-        const { token } = res.data
-       setUser({ token })
+        const { sessionToken } = res.data;
+        console.log("sessionToken", sessionToken)
+        localStorage.setItem("sessionToken", sessionToken);
 
-        console.log(res)
+        setUser(sessionToken);
+
+        console.log("res.data",res.data)
+        console.log(user)
+
 
         navigate("/home")
 

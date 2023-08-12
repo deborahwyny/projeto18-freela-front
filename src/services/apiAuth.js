@@ -12,11 +12,17 @@ function cadastro(body) {
     const promise = axios.post(`${BASE_URL}/cadastro`, body);
     return promise;
 }
+function cadastreGatinho(body, token) {
+    const instance = axios.create({
+      baseURL: BASE_URL,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  
+    return instance.post('/pets', body);
+  }
 
-function cadastreGatinho(body) {
-    const promise = axios.post(`${BASE_URL}/pets`, body);
-    return promise;
-}
 
 function gatinhosHome(){
 const promise = axios.get(`${BASE_URL}/pets`);
