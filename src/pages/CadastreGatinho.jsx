@@ -16,6 +16,15 @@ export default function RegistrationCard() {
   
   }
 
+  const body = {
+    text: form.text,
+    tutor: form.tutor,
+    nome:form.nome,
+    telefone: form.telefone,
+    url: form.url,
+    valor: form.valor
+  };  
+
   function cadastreGatinho(){
     e.preventDefault()
     apiAuth.cadastreGatinho(form)
@@ -33,7 +42,12 @@ export default function RegistrationCard() {
   }
 
   return (
+    
     <CenteredContainer>
+     <ButtonContainer>
+      <Link to="/home"><BackButton to="/home">Voltar para o Home</BackButton> </Link>
+        
+      </ButtonContainer>
       <Card>
         <CardContent>
           <CadastreLogo src={Cadastre} alt="Cadastre"/>
@@ -72,6 +86,27 @@ export default function RegistrationCard() {
     </CenteredContainer>
   );
 }
+
+const ButtonContainer = styled.div`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+`;
+
+const BackButton = styled(Link)`
+  text-decoration: none;
+  background-color: #8c7da4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #6c549e;
+  }
+`;
 
 const CenteredContainer = styled.div`
   display: flex;
