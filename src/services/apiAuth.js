@@ -29,5 +29,19 @@ const promise = axios.get(`${BASE_URL}/pets`);
 return promise;
 }
 
-const apiAuth = {login,cadastro, cadastreGatinho,gatinhosHome} 
+
+function getTutor(token){
+    const promise = axios.get(`${BASE_URL}/pets`);
+    const instance = axios.create({
+        baseURL: BASE_URL,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    
+      return instance.get('/pets');
+
+}
+
+const apiAuth = {login,cadastro, cadastreGatinho,gatinhosHome,getTutor} 
 export default apiAuth

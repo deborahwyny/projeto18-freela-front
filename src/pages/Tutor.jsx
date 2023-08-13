@@ -1,44 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import apiAuth from "../services/apiAuth";
+import { Link, useNavigate } from "react-router-dom"; 
 
 export default function TutorPage() {
-  const [catData, setCatData] = useState({
-    name: 'Whiskers',
-    characteristics: 'Fluffy and playful',
-    tutorName: 'John Doe',
-    contactPhone: '123-456-7890',
-    contactEmail: 'johndoe@example.com',
-    isActive: true,
-    catImage: 'https://via.placeholder.com/150', // URL da imagem do gatinho
-    tutorImage: 'https://via.placeholder.com/150', // URL da imagem do tutor
-  });
+  const [catData, setCatData] = useState([]); 
 
-  const handleToggleCatStatus = () => {
-    setCatData({
-      ...catData,
-      isActive: !catData.isActive,
-    });
+  const handleToggleCatStatus = (catId) => {
+    setCatData(prevCatData => prevCatData.map(cat => {
+      if (cat.id === catId) {
+        return {
+          ...cat,
+          isActive: !cat.isActive
+        };
+      }
+      return cat;
+    }));
   };
+
+  useEffect(()=>{
+
+
+    apiAuth.getTutor()
+    .then(res=>{
+      console.log(res)
+      setCatData(res.data)
+    })
+    .catch(err=>{
+      console.log(err.response)
+  
+    })
+    
+  
+  
+  }, [])
+  
 
   return (
     <PageContainer>
       <CardConteiner>
-      <CatInfoCard>
-        <CatImage src={catData.catImage} alt={catData.name} />
-        <CatName>{catData.name}</CatName>
-        <CatCharacteristics>{catData.characteristics}</CatCharacteristics>
-        <TutorInfo>
-          <TutorContact>{catData.contactPhone}</TutorContact>
-          <TutorEmail>{catData.contactEmail}</TutorEmail>
-        </TutorInfo>
-        <ToggleStatusButton isActive={catData.isActive} onClick={handleToggleCatStatus}>
-          {catData.isActive ? 'Desativar Gatinho' : 'Ativar Gatinho'}
-        </ToggleStatusButton>
-      </CatInfoCard>
+        {catData.map((cat )=> (
+          <CatInfoCard key={cat.id}>
+            <CatImage src={cat.url} alt={cat.nome_gatinho} />
+            <CatName>{cat.nome_gatinho}</CatName>
+            <CatCharacteristics>{cat.caracteristica}</CatCharacteristics>
+            <TutorInfo>
+            <TutorNome>{cat.nome_tutor}</TutorNome>
+              <TutorContact>{cat.telefone_contato}</TutorContact>
+              <TutorValor>{cat.valor}</TutorValor>
+            </TutorInfo>
+            <ToggleStatusButton isActive={cat.isActive} onClick={() => handleToggleCatStatus(cat.id)}>
+              {cat.isActive ? 'Desativar Gatinho' : 'Ativar Gatinho'}
+            </ToggleStatusButton>
+          </CatInfoCard>
+        ))}
       </CardConteiner>
       <BottomGif>
-  <img src="https://i.pinimg.com/originals/48/5e/83/485e83ad5709e90ba5a0cffccb717e08.gif" alt="Gatinho correndo" />
-</BottomGif>
+        <img src="https://i.pinimg.com/originals/48/5e/83/485e83ad5709e90ba5a0cffccb717e08.gif" alt="Gatinho correndo" />
+      </BottomGif>
+      <BackButton to="/home">Voltar para o Home</BackButton>
 
     </PageContainer>
   );
@@ -51,12 +71,13 @@ const PageContainer = styled.div`
   height: 100vh;
 `;
 
-
-
 const CardConteiner = styled.div`
-
 display: flex;
 justify-content: center;
+flex-wrap: wrap;
+align-items: center;
+gap:5px;
+padding: 5px;
     
 `
 
@@ -92,14 +113,21 @@ const TutorInfo = styled.div`
   margin-bottom: 10px;
 `;
 
+const TutorValor = styled.div`
+  text-align: center;
+  margin-bottom: 10px;
+`;
+
 const TutorContact = styled.p`
   font-size: 14px;
   margin-bottom: 5px;
 `;
 
-const TutorEmail = styled.p`
+const TutorNome = styled.div`
   font-size: 14px;
+  margin-bottom: 5px;
 `;
+
 
 const ToggleStatusButton = styled.button`
   background-color: ${({ isActive }) => (isActive ? '#ebd9f5' : '#6c549e')};
@@ -124,4 +152,18 @@ const BottomGif = styled.div`
     height: auto;
   }
 `;
+const BackButton = styled(Link)`
+  margin-top: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+  background-color: #6c549e;
+  color: #fff;
+  border: solid;
+  cursor: pointer;
+  transition: background-color 0.3s;
 
+  &:hover {
+    color: #5c468a;
+  }
+`;

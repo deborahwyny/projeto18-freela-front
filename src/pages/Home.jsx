@@ -61,6 +61,8 @@ export default function Home() {
               <CardImage url={cat.url}  />
               <CardName>{cat.nome_gatinho}</CardName>
               <CardContact>Telefone: {cat.telefone_contato}</CardContact>
+              <CardContact>Valor: {cat.valor}</CardContact>
+
 
               {expandedCat === cat.id && (
                 <CardDescription>{cat.caracteristica}</CardDescription>
