@@ -41,13 +41,7 @@ export default function Home() {
         <Logo src={NomeLogo} alt="Miaudelos Logo" />
         <NavItems>
           <NavItem>
-            <NavItemLink href="/">Home</NavItemLink>
-          </NavItem>
-          <NavItem>
             <NavItemLink href="/tutor">Tutor</NavItemLink>
-          </NavItem>
-          <NavItem>
-            <NavItemLink href="/cats">Cats</NavItemLink>
           </NavItem>
           <NavItem>
             <NavItemLink href="/cadastre">Cadastre</NavItemLink>
@@ -57,7 +51,7 @@ export default function Home() {
       <Container>
         <CardContainer>
           {fotosGatinhos.map((cat) => (
-            <Card key={cat.id} onClick={() => expandCat(cat.id)} expanded={expandedCat === cat.id}>
+            <Card  key={cat.id} onClick={() => expandCat(cat.id)} expanded={expandedCat === cat.id}>
               <CardImage url={cat.url}  />
               <CardName>{cat.nome_gatinho}</CardName>
               <CardContact>Telefone: {cat.telefone_contato}</CardContact>
