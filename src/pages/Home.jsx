@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import NomeLogo from "../assets/nomeLogo.png";
 import apiAuth from "../services/apiAuth";
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 
 export default function Home() {
@@ -40,11 +41,11 @@ export default function Home() {
       <Navbar>
         <Logo src={NomeLogo} alt="Miaudelos Logo" />
         <NavItems>
-          <NavItem>
-            <NavItemLink href="/tutor">Tutor</NavItemLink>
+          <NavItem> 
+            <Link to="/tutor"> <NavItemLink>Tutor</NavItemLink></Link>
           </NavItem>
           <NavItem>
-            <NavItemLink href="/cadastre">Cadastre</NavItemLink>
+            <Link to="/cadastre"> <NavItemLink>Cadastre</NavItemLink></Link>
           </NavItem>
         </NavItems>
       </Navbar>
